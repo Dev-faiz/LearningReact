@@ -11,17 +11,22 @@ export const Form = ()=>{
         Password: yup.string().min(4).max(20).required("Password is required"),
         CPassword: yup.string().oneOf([yup.ref("Password"),null]).required("Confirm Password is required")
     })
-    const {register , handleSubmit} = useForm( { resolver : yupResolver(schema)} );
+    const {register , handleSubmit , formState:{errors}} = useForm( { resolver : yupResolver(schema)} );
     const onSubmit = (data)=>{
         console.log(data)
     }
     return (
         <form onSubmit={handleSubmit(onSubmit)}>
             <input type="text" placeholder="Full Name..." {...register("fullName")} /><br/>
+            <p>{errors.fullName?.message}</p>
             <input type="text" placeholder="Email..." {...register("Email")}/><br/>
+            <p>{errors.Email?.message}</p>
             <input type="number" placeholder="Age..." {...register("Age")}/><br/>
+            <p>{errors.Age?.message}</p>
             <input type="text" placeholder="Password..." {...register("Password")}/><br/>
+            <p>{errors.Password?.message}</p>
             <input type="text" placeholder="Confirm Password..." {...register("CPassword")}/><br/>
+            <p>{errors.CPassword?.message}</p>
             <input type="submit" name="Submit" value="Submit" />
         </form>
     )
